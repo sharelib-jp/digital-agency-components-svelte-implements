@@ -1,0 +1,133 @@
+name: CI and GitHub Packages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Set up pnpm from packageManager
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Test publication guards
+        run: node --test scripts/package-version-published.test.mjs tests/check-publish-registry.test.mjs
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set up Firefox
+        id: firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: latest-esr
+
+      - name: Verify Firefox is executable
+        env:
+          FIREFOX_BIN: ${{ steps.firefox.outputs.firefox-path }}
+        run: |
+          test -n "$FIREFOX_BIN"
+          test -x "$FIREFOX_BIN"
+          "$FIREFOX_BIN" --version
+
+      - name: Check types
+        run: pnpm check
+
+      - name: Test components
+        run: pnpm test:components
+
+      - name: Test components in Firefox
+        env:
+          FIREFOX_BIN: ${{ steps.firefox.outputs.firefox-path }}
+        run: pnpm test:components:browser
+
+      - name: Validate package exports and consumer type declarations
+        run: pnpm test:package
+
+  publish:
+    needs: checks
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    concurrency:
+      group: github-packages-publish
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js and GitHub Packages authentication
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: https://npm.pkg.github.com
+          scope: "@sharelib-jp"
+
+      - name: Check whether this version is already published
+        id: version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/package-version-published.mjs
+
+      - name: Skip already published version
+        if: steps.version.outputs.published == 'true'
+        run: echo 'This package version is already published; skipping publication.'
+
+      - name: Set up pnpm from packageManager
+        if: steps.version.outputs.published == 'false'
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        if: steps.version.outputs.published == 'false'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build distributable package
+        if: steps.version.outputs.published == 'false'
+        run: pnpm build
+
+      - name: Publish to GitHub Packages only
+        if: steps.version.outputs.published == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm publish --registry=https://npm.pkg.github.com
+
+      - name: Verify the package downloaded from GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/export-published-package.mjs
+
+      - name: Save the verified publication artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-package
+          path: .svelte-kit/published-package/
+          if-no-files-found: error
+          retention-days: 7
