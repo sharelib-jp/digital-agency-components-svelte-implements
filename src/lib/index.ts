@@ -16,6 +16,12 @@ export { default as ResourceList } from "./components/ResourceList.svelte";
 export { default as SearchBox } from "./components/SearchBox.svelte";
 export { default as Switch } from "./components/Switch.svelte";
 export { default as Textarea } from "./components/Textarea.svelte";
+export { default as MenuList } from "./components/MenuList.svelte";
+export { default as MenuListBox } from "./components/MenuListBox.svelte";
+export { default as ProgressIndicator } from "./components/ProgressIndicator.svelte";
+export { default as FileUpload } from "./components/FileUpload.svelte";
+export { default as StepNavigation } from "./components/StepNavigation.svelte";
+export { default as DatePicker } from "./components/DatePicker.svelte";
 
 export type {
   HorizontalMenuItem,
@@ -23,6 +29,43 @@ export type {
   HorizontalMenuSelectDetail,
 } from "./components/HorizontalMenu.svelte";
 export type { ImageSource } from "./components/Image.svelte";
+export type {
+  MenuListLinkItem,
+  MenuListItem,
+  MenuListSelectDetail,
+} from "./components/MenuList.svelte";
+export type {
+  MenuListBoxItem,
+  MenuListBoxSelectDetail,
+} from "./components/MenuListBox.svelte";
+export type {
+  ProgressIndicatorShape,
+  ProgressIndicatorType,
+  ProgressIndicatorSize,
+  ProgressIndicatorIntent,
+} from "./components/ProgressIndicator.svelte";
+export type {
+  FileUploadExistingFile,
+  FileUploadFileError,
+  FileUploadValidationDetail,
+  FileUploadChangeDetail,
+  FileUploadRemoveDetail,
+  FileUploadMessages,
+} from "./components/FileUpload.svelte";
+export type {
+  StepNavigationVariant,
+  StepNavigationOrientation,
+  StepNavigationSize,
+  StepNavigationStatus,
+  StepNavigationStep,
+  StepNavigationSelectDetail,
+} from "./components/StepNavigation.svelte";
+export type {
+  DatePickerType,
+  DatePickerSize,
+  DatePickerChangeDetail,
+  DatePickerEvents,
+} from "./components/DatePicker.svelte";
 export type {
   PageNavigationChangeDetail,
   PageNavigationSize,

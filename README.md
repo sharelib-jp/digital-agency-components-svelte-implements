@@ -6,7 +6,9 @@
 
 ## コンポーネント
 
-Button、Checkbox、Divider、EmergencyBanner、FormControlLabel、Heading、HorizontalMenu、Image、InputText、Link、ModalDialog、NotificationBanner、PageNavigation、RadioButton、ResourceList、SearchBox、Switch、Textarea の18種類を提供します。
+Button、Checkbox、DatePicker、Divider、EmergencyBanner、FileUpload、FormControlLabel、Heading、HorizontalMenu、Image、InputText、Link、MenuList、MenuListBox、ModalDialog、NotificationBanner、PageNavigation、ProgressIndicator、RadioButton、ResourceList、SearchBox、StepNavigation、Switch、Textarea の24種類を提供します。
+
+各コンポーネントのコード例・props・イベント・使用上の注意点は、[コンポーネントドキュメント](./docs/README.md)を参照してください。
 
 ## インストール・利用
 
@@ -70,7 +72,15 @@ pnpm build
 node --test tests/check-publish-registry.test.mjs scripts/package-version-published.test.mjs
 ```
 
-`test:components` はコンパイル・SSRの152テスト、`test:components:browser` は Firefox の実操作テストです。ローカルに Firefox がない場合だけブラウザーテストを skip します。必要なら `FIREFOX_BIN` に実行ファイルを指定できます。CI は Firefox を明示インストールします。
+`test:components` はコンパイル・SSRの232テスト、`test:components:browser` は Firefox の実操作テストです。テストは `tests/<component>.test.mjs` と `tests/<component>.browser.test.mjs` に分割し、コンパイル・ブラウザー起動の処理を共通ヘルパーにまとめています。各コマンドは対象ファイルを自動検出するため、新しいテストも CI で実行されます。
+
+```sh
+# コンポーネント単位の検証
+node --test tests/date-picker.test.mjs
+node --test tests/date-picker.browser.test.mjs
+```
+
+ローカルに Firefox がない場合だけブラウザーテストを skip します。必要なら `FIREFOX_BIN` に実行ファイルを指定できます。CI は Firefox を明示インストールします。
 
 既存の Button / InputText の未使用 CSS 警告12件は、移動に伴って変更していません。
 

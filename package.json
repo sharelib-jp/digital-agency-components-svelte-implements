@@ -39,8 +39,8 @@
   "scripts": {
     "build": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test:components": "node --test tests/components.test.mjs",
-    "test:components:browser": "node --test tests/components.browser.test.mjs",
+    "test:components": "node scripts/run-component-tests.mjs",
+    "test:components:browser": "node scripts/run-component-tests.mjs --browser",
     "test:publish-registry": "node --test tests/check-publish-registry.test.mjs",
     "test:package": "pnpm build && node --test tests/package.test.mjs",
     "prepublishOnly": "node scripts/check-publish-registry.mjs && npm run build",

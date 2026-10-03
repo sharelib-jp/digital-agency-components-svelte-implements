@@ -34,6 +34,12 @@ const names = [
   "SearchBox",
   "Switch",
   "Textarea",
+  "MenuList",
+  "MenuListBox",
+  "ProgressIndicator",
+  "FileUpload",
+  "StepNavigation",
+  "DatePicker",
 ];
 
 test("Every public package export has a built implementation and type declaration", async () => {
@@ -71,11 +77,15 @@ test(
       await writeFile(
         fixture,
         `
-import { ${names.join(", ")}, type ResourceListItem, type HorizontalMenuItem } from '@sharelib-jp/digital-agency-components-svelte-implements';
+import { ${names.join(", ")}, type ResourceListItem, type HorizontalMenuItem, type MenuListItem, type FileUploadExistingFile, type StepNavigationStep, type DatePickerChangeDetail } from '@sharelib-jp/digital-agency-components-svelte-implements';
 import LinkSubpath from '@sharelib-jp/digital-agency-components-svelte-implements/components/Link.svelte';
 export const components = [${names.join(", ")}, LinkSubpath];
 export const resource: ResourceListItem = { id: 'guide', type: 'link', title: 'ガイド', href: '/guide' };
 export const menu: HorizontalMenuItem = { id: 'home', label: 'ホーム', href: '/' };
+export const list: MenuListItem = { id: 'guide', label: 'ガイド', href: '/guide' };
+export const stored: FileUploadExistingFile = { id: 'saved', name: 'saved.pdf', size: 1024 };
+export const step: StepNavigationStep = { id: 'input', label: '入力', status: 'editing' };
+export const date: DatePickerChangeDetail = { value: '2024-02-29', date: null, valid: true, source: 'input' };
 `,
       );
       await execute(
