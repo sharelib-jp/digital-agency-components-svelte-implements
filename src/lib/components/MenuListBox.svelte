@@ -16,17 +16,29 @@
     import MenuList from './MenuList.svelte';
 
     // 呼び出し元のIDでSSRとクライアントのARIA参照を一致させる。
+    /** 必須のルートID。一意・非空でSSRとクライアントで同じ値を指定し、-opener／-menuのID生成に使う。 */
     export let id: string;
+    /** 平坦なメニュー項目。子項目は指定できず、項目IDは一意にする。既定値: []。 */
     export let items: MenuListBoxItem[] = [];
+    /** 開閉ボタンの文言。label slotが優先され、選択結果には自動置換されない。既定値: 'メニュー'。 */
     export let label: string = 'メニュー';
+    /** 開閉状態。bind:openで内部の変更を受け取る。直接trueにしてもフォーカスは移動しない。既定値: false。 */
     export let open: boolean = false;
+    /** 現在項目のID。bind:selectedId対応。nullなら各項目のcurrentを参照し、フォーカス先とは独立。既定値: null。 */
     export let selectedId: string | null = null;
+    /** 開閉ボタンと全項目を無効にし、メニューを閉じる。既定値: false。 */
     export let disabled: boolean = false;
+    /** 開閉ボタンのサイズ。メニュー項目は常にregular。既定値: 'sm'。 */
     export let size: 'sm' | 'md' = 'sm';
+    /** 開閉ボタンの外観（data-style）。HTML style属性とは別で、大文字のSで指定。既定値: 'text'。 */
     export let Style: 'text' | 'outlined' | 'filled' = 'text';
+    /** 開閉ボタンの文字の太さ（data-text-weight）。既定値: 'normal'。 */
     export let fontWeight: 'normal' | 'bold' = 'normal';
+    /** 開閉ボタンの前方装飾SVGのpathのd。未指定なら非表示。既定値: undefined。 */
     export let iconPath: string | undefined = undefined;
+    /** 開閉ボタンの前方装飾SVGのviewBox。既定値: '0 0 24 24'。 */
     export let iconViewBox: string = '0 0 24 24';
+    /** ルートのdivのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 
     const dispatch = createEventDispatcher<{ select: MenuListBoxSelectDetail }>();

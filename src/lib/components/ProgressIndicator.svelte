@@ -8,24 +8,43 @@
 <script lang="ts">
     import { onMount } from 'svelte';
 
+    /** 進捗表示の形状（円形・線形・静的な砂時計）。既定値: 'circular'。 */
     export let shape: ProgressIndicatorShape = 'circular';
+    /** ラベルとの配置（縦並び・横並び・背景パネル付き縦並び）。既定値: 'stacked'。 */
     export let type: ProgressIndicatorType = 'stacked';
+    /** SVGの表示サイズ。未指定時はtypeがinlinedならsm、それ以外ならlgを使う。 */
     export let size: ProgressIndicatorSize | undefined = undefined;
+    /** 有限数なら確定進捗、それ以外は不確定。表示値だけを範囲内に補正し、propは書き換えない。既定値: null。 */
     export let value: number | null | undefined = null;
+    /** 進捗の下限。上下限と差が有限でmax > minなら採用し、不正な範囲は内部で0〜100に戻す。既定値: 0。 */
     export let min: number = 0;
+    /** 進捗の上限。minより大きい有限数で、差も有限となる範囲を指定する。既定値: 100。 */
     export let max: number = 100;
+    /** 親から指定する処理中の状態。falseで非表示・アニメーション停止。内部では更新しない。既定値: true。 */
     export let active: boolean = true;
+    /** 可視ラベル。空文字・空白のみなら表示しない。既定値: '読み込み中'。 */
     export let label: string = '読み込み中';
+    /** progressbarのaria-label。未指定時は空でないlabel、なければ「読み込み中」を使う。 */
     export let ariaLabel: string | undefined = undefined;
+    /** aria-valuetextの文言。割合より適切な件数などを指定できる。既定値: undefined。 */
     export let valueText: string | undefined = undefined;
+    /** 可視ラベルがあり確定進捗なら、丸めた割合を併記する。既定値: true。 */
     export let showPercentage: boolean = true;
+    /** 読み上げ通知の方針。explicitで開始・停止・定期通知、passiveでは通知なし。既定値: 'passive'。 */
     export let intent: ProgressIndicatorIntent = 'passive';
+    /** explicit時の定期通知間隔（秒）。正の有限数以外は5秒として使う。既定値: 5。 */
     export let announceInterval: number = 5;
+    /** explicit時の開始通知の文言。既定値: '読み込みを開始しました'。 */
     export let announceStart: string = '読み込みを開始しました';
+    /** explicit時の停止通知。失敗・キャンセルを表す場合は文言を変更する。既定値: '読み込みが完了しました'。 */
     export let announceEnd: string = '読み込みが完了しました';
+    /** explicit時の不確定進捗の定期通知。既定値: '読み込み中です'。 */
     export let announceLong: string = '読み込み中です';
+    /** explicit時の確定進捗の定期通知。{value}を丸めた割合に置換する。既定値: '{value}% 読み込みました。'。 */
     export let announceLongWithValue: string = '{value}% 読み込みました。';
+    /** progressbarのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
+    /** progressbar要素のDOM ID。既定値: undefined。 */
     export let id: string | undefined = undefined;
 
     let mounted = false;

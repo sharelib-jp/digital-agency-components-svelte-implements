@@ -1,16 +1,29 @@
 <script lang="ts">
+    /** 必須の内部inputのID。ページ内で一意にし、ラベルと補足・エラー文の関連付けに使います。 */
     export let id: string;
+    /** 内部inputのname属性（フォーム送信名）。既定値: undefined。 */
     export let name: string | undefined = undefined;
+    /** チェック時のフォーム送信値。選択状態ではありません。既定値: 'on'。 */
     export let value: string = 'on';
+    /** チェックボックスの横に表示するラベル。既定値: ''。 */
     export let label: string = '';
+    /** チェックボックスとラベルの寸法・間隔。既定値: 'sm'。 */
     export let size: 'sm' | 'md' | 'lg' = 'sm';
+    /** 選択状態。`bind:checked`で双方向に同期できます。既定値: false。 */
     export let checked: boolean = false;
+    /** 一部選択などを表す未確定状態。`bind:indeterminate`対応。子項目の自動集計はしません。既定値: false。 */
     export let indeterminate: boolean = false;
+    /** 内部inputを無効にし、操作・フォーカス・フォーム送信の対象から外します。既定値: false。 */
     export let disabled: boolean = false;
+    /** このチェックボックス自身のチェックを求めるネイティブ必須制約。既定値: false。 */
     export let required: boolean = false;
+    /** エラー配色と`aria-invalid="true"`を設定します。自動検証は行いません。既定値: false。 */
     export let errored: boolean = false;
+    /** チェックボックスの前に表示する補足文。空文字列では非表示です。既定値: null。 */
     export let supportText: string | null = null;
+    /** 後ろに表示するエラー文。非空なら`aria-invalid="true"`も設定しますが、ネイティブ検証は変更しません。既定値: null。 */
     export let errorText: string | null = null;
+    /** 外側のdivのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     $: supportTextId = supportText ? `${id}-support-text` : undefined;

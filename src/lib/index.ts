@@ -1,4 +1,5 @@
 export { default as Button } from "./components/Button.svelte";
+export { default as Card } from "./components/Card.svelte";
 export { default as Checkbox } from "./components/Checkbox.svelte";
 export { default as Divider } from "./components/Divider.svelte";
 export { default as EmergencyBanner } from "./components/EmergencyBanner.svelte";
@@ -22,6 +23,34 @@ export { default as ProgressIndicator } from "./components/ProgressIndicator.sve
 export { default as FileUpload } from "./components/FileUpload.svelte";
 export { default as StepNavigation } from "./components/StepNavigation.svelte";
 export { default as DatePicker } from "./components/DatePicker.svelte";
+
+export type {
+  ButtonProps,
+  CardProps,
+  CheckboxProps,
+  DatePickerProps,
+  DividerProps,
+  EmergencyBannerProps,
+  FileUploadProps,
+  FormControlLabelProps,
+  HeadingProps,
+  HorizontalMenuProps,
+  ImageProps,
+  InputTextProps,
+  LinkProps,
+  MenuListProps,
+  MenuListBoxProps,
+  ModalDialogProps,
+  NotificationBannerProps,
+  PageNavigationProps,
+  ProgressIndicatorProps,
+  RadioButtonProps,
+  ResourceListProps,
+  SearchBoxProps,
+  StepNavigationProps,
+  SwitchProps,
+  TextareaProps,
+} from "./component-types.js";
 
 export type {
   HorizontalMenuItem,

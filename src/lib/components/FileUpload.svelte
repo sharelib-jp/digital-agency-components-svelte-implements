@@ -59,34 +59,66 @@
     import FormControlLabel from './FormControlLabel.svelte';
     import Checkbox from './Checkbox.svelte';
 
+    /** 必須の送信用file入力のID。ページ内で一意にし、内部要素の派生IDにも使います。 */
     export let id: string;
+    /** 新規ファイルを送るinputのname属性。未指定ならFormDataに含まれません。既定値: undefined。 */
     export let name: string | undefined = undefined;
+    /** 関連付ける外部フォームのID（form属性）。新規入力と既存IDのhidden入力に設定します。既定値: undefined。 */
     export let form: string | undefined = undefined;
+    /** 入力のラベル。空なら外部ラベルやaria-labelを用意します。既定値: '参照する画像・ドキュメント'。 */
     export let label: string = '参照する画像・ドキュメント';
+    /** 入力・選択ボタンに関連付ける説明文。HTMLとしては解釈しません。既定値: null。 */
     export let supportText: string | null = null;
+    /** 新規Fileの選択を求めるネイティブ必須制約。既存ファイルのメタデータだけでは満たせません。既定値: false。 */
     export let required: boolean = false;
+    /** 選択・解除・ドロップを無効にし、新規ファイルと既存IDを送信対象から外します。既定値: false。 */
     export let disabled: boolean = false;
+    /** 選択・解除・拡張UIを非表示にし、ドロップも禁止します。値は送信対象に残ります。既定値: false。 */
     export let readonly: boolean = false;
+    /** 複数選択を許可します。falseでは選択ごとに新規・既存の一覧を置き換え、最大1件を検証します。既定値: true。 */
     export let multiple: boolean = true;
+    /** 許可する拡張子・MIMEをカンマ区切りで指定します。新規ファイルのみ検証対象です。既定値: ''。 */
     export let accept: string = '';
+    /** 新規ローカルファイルの一覧。`bind:files`推奨。検証エラーのあるファイルも残ります。既定値: []。 */
     export let files: File[] = [];
+    /** 保存済みファイルのメタデータ。`bind:existingFiles`対応。バイナリではなくIDを送信します。既定値: []。 */
     export let existingFiles: FileUploadExistingFile[] = [];
+    /** 既存IDを送るhidden inputのname属性。省略時はnameに'-existing'を付け、nameもなければhidden入力を出力しません。 */
     export let existingFilesName: string | undefined = undefined;
+    /** 新規・既存の合計件数の上限（非負整数）。未指定時は複数モードでは上限なし、単一モードでは最大1件です。既定値: undefined。 */
     export let maxFiles: number | undefined = undefined;
+    /** 新規ファイル1個のサイズ上限。数値はバイト、文字列は'5MB'など（1024進数）。未指定・空文字は上限なし。既定値: undefined。 */
     export let maxFileSize: number | string | undefined = undefined;
+    /** 新規・既存の合計サイズ上限。数値はバイト、文字列は'10MB'など（1024進数）。未指定・空文字は上限なし。既定値: undefined。 */
     export let maxTotalSize: number | string | undefined = undefined;
+    /** ドロップエリアとローカルドロップを有効にします。falseではボタン型の表示です。既定値: true。 */
     export let droppable: boolean = true;
+    /** ドロップ範囲をウィンドウ全体に広げるチェックボックスを表示します。既定値: true。 */
     export let dropAreaExpandable: boolean = true;
+    /** ウィンドウ全体でドロップを受け付ける状態。`bind:expandedDropArea`対応。同時に有効なのは1インスタンスだけです。既定値: false。 */
     export let expandedDropArea: boolean = false;
+    /** ファイル選択ボタンの文言。既定値: 'ファイルを選択'。 */
     export let buttonLabel: string = 'ファイルを選択';
+    /** ドロップエリア内の説明文。既定値: 'または、このエリア内にドラッグ＆ドロップ'。 */
     export let dropText: string = 'または、このエリア内にドラッグ＆ドロップ';
+    /**
+     * ドロップ範囲を広げるチェックボックスのラベル。
+     * @default 'ドラッグ＆ドロップの範囲をこのブラウザウィンドウ全体に広げる'
+     */
     export let expandLabel: string = 'ドラッグ＆ドロップの範囲をこのブラウザウィンドウ全体に広げる';
+    /** 拡張時の全画面オーバーレイの文言。既定値: 'このエリア内にファイルをドラッグ＆ドロップ'。 */
     export let overlayText: string = 'このエリア内にファイルをドラッグ＆ドロップ';
+    /** 一覧が空のときの文言。既定値: 'ファイルが選択されていません'。 */
     export let emptyText: string = 'ファイルが選択されていません';
+    /** 解除ボタンの文言。アクセシブルな名前には対象ファイル名も含みます。既定値: '解除'。 */
     export let removeLabel: string = '解除';
+    /** 外部エラー文。表示し、非空ならネイティブのcustom validityにも反映します。既定値: null。 */
     export let errorText: string | null = null;
+    /** 利用側の制約検証メッセージ。非空ならネイティブ検証で無効にし、エラー一覧にも表示します。既定値: ''。 */
     export let customValidity: string = '';
+    /** 検証・読み上げメッセージの上書き。未指定の項目や空文字列は内部の既定文言を使います。既定値: {}。 */
     export let messages: Partial<FileUploadMessages> = {};
+    /** 外側のフォームラベル用divのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     const defaults: FileUploadMessages = {

@@ -2,10 +2,14 @@
     type ButtonType = 'solid-fill' | 'solid-outline' | 'outline';
     type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
+    /** ボタンのサイズ。既定値: 'md'。 */
     export let size: ButtonSize = 'md';
+    /** デザインの種別。HTML の button type ではありません。solid-outline の CSS は未実装です。既定値: 'solid-fill'。 */
     export let type: ButtonType = 'solid-fill';
+    /** 親要素の幅いっぱいに表示します。既定値: false。 */
     export let fullWidth: boolean = false;
 
+    /** ボタンに表示するテキスト。既定値: 'ボタン'。 */
     export let label: string = 'ボタン';
 </script>
 

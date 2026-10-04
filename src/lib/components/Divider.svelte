@@ -1,8 +1,13 @@
 <script lang="ts">
+    /** 区切りの要素。hrは意味的な区切り、divは支援技術から隠す装飾。既定値: 'hr'。 */
     export let element: 'hr' | 'div' = 'hr';
+    /** 共通カラートークンに対応する線の色。既定値: 'solid-gray-420'。 */
     export let color: 'solid-gray-420' | 'solid-gray-536' | 'black' = 'solid-gray-420';
+    /** 実線・破線の選択。CSSのインラインstyle文字列ではない。既定値: 'solid'。 */
     export let style: 'solid' | 'dashed' = 'solid';
+    /** 線の太さ（1〜4px）を文字列で指定。横幅ではない。既定値: '1'。 */
     export let width: '1' | '2' | '3' | '4' = '1';
+    /** 区切り線のHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 </script>
 

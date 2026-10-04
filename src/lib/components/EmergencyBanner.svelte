@@ -1,12 +1,21 @@
 <script lang="ts">
+    /** ルートのarticle要素のID。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** ルートのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
+    /** h2の見出しテキスト。heading slotが優先される。既定値: '緊急のお知らせ'。 */
     export let heading: string = '緊急のお知らせ';
+    /** 本文の文字列。デフォルトslot未指定時にp要素で表示。既定値: ''。 */
     export let message: string = '';
+    /** 表示用の日時。空文字ならtime要素を表示しない。既定値: ''。 */
     export let timestamp: string = '';
+    /** time要素の機械可読なdatetime属性。timestampと組み合わせて指定。既定値: undefined。 */
     export let datetime: string | undefined = undefined;
+    /** 詳細リンクのURL。actions slotが優先され、空または未指定なら既定リンクは非表示。既定値: undefined。 */
     export let href: string | undefined = undefined;
+    /** actions slot未指定時の詳細リンクのテキスト。既定値: '詳細を確認する'。 */
     export let linkLabel: string = '詳細を確認する';
+    /** 既定リンクの表示先。_blankでは安全なrelと新規タブの案内を付ける。既定値: '_self'。 */
     export let target: '_self' | '_blank' = '_self';
 </script>
 

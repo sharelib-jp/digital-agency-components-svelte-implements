@@ -2,23 +2,41 @@
     import { onDestroy } from 'svelte';
     import FormControlLabel from './FormControlLabel.svelte';
 
+    /** 必須の内部textareaのID。ページ内で一意にし、ラベルと補足・エラー文の関連付けに使います。 */
     export let id: string;
+    /** textareaのname属性（フォーム送信名）。既定値: undefined。 */
     export let name: string | undefined = undefined;
+    /** 入力内容。`bind:value`で親と双方向に同期できます。既定値: ''。 */
     export let value: string = '';
+    /** 入力欄の前に表示するラベル。空文字列ではlabel要素を描画しません。既定値: ''。 */
     export let label: string = '';
+    /** ラベルの文字サイズと周囲の間隔。入力欄の行数ではありません。既定値: 'md'。 */
     export let size: 'sm' | 'md' | 'lg' = 'md';
+    /** textareaのrows属性（表示行数）。正の整数を指定し、未指定時はブラウザーに委ねます。既定値: undefined。 */
     export let rows: number | undefined = undefined;
+    /** textareaのcols属性（表示幅の目安）。正の整数を指定し、未指定時はブラウザーに委ねます。既定値: undefined。 */
     export let cols: number | undefined = undefined;
+    /** 編集を禁止します。フォーカス・コピー・フォーム送信は可能です。既定値: false。 */
     export let readonly: boolean = false;
+    /** readonlyかつラベルがある場合に、必須・任意表示の代わりに示す文言。既定値: '編集不可'。 */
     export let readonlyText: string = '編集不可';
+    /** textareaを無効にし、フォーム送信の対象から外します。既定値: false。 */
     export let disabled: boolean = false;
+    /** ネイティブ必須制約と、読み取り専用でない場合のラベルの必須表示を設定します。既定値: false。 */
     export let required: boolean = false;
+    /** 入力欄の前に表示する補足文。空文字列では非表示です。既定値: null。 */
     export let supportText: string | null = null;
+    /** 後ろに表示するエラー文。非空なら`aria-invalid="true"`も設定しますが、このprop自体は送信を止めません。既定値: null。 */
     export let errorText: string | null = null;
+    /** UTF-16コード単位で数えるカウンタと超過検証の上限。非負の有限整数を指定し、nullなら無効。入力は切り詰めません。既定値: null。 */
     export let counterMax: number | null = null;
+    /** 超過時のネイティブ制約検証メッセージ。{count}を超過数に置換します。既定値: '{count}文字超過しています'。 */
     export let counterErrorMessage: string = '{count}文字超過しています';
+    /** 超過時のassertiveな読み上げ通知。{count}を超過数に置換します。既定値: '{count}文字超過'。 */
     export let counterExceededMessage: string = '{count}文字超過';
+    /** 残り数のpoliteな読み上げ通知。{count}を残り数に置換します。既定値: '残り{count}文字'。 */
     export let counterRemainingMessage: string = '残り{count}文字';
+    /** 外側のフォームラベル用divのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     let textarea: HTMLTextAreaElement | undefined;

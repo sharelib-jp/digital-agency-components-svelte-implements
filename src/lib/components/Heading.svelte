@@ -2,14 +2,23 @@
     type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     type HeadingSize = '64' | '57' | '45' | '36' | '32' | '28' | '24' | '20' | '18' | '16';
 
+    /** 文書の階層に合わせる見出し要素。表示サイズとは独立。既定値: 'h2'。 */
     export let level: HeadingLevel = 'h2';
+    /** 見出しの表示サイズ。文字列の値をcalc(値 / 16 * 1rem)に対応させる。既定値: '36'。 */
     export let size: HeadingSize = '36';
+    /** 見出しテキスト。デフォルトslotが優先され、どちらかで内容を指定する。既定値: ''。 */
     export let text: string = '';
+    /** 見出し上の補助テキスト。shoulder slotが優先される。既定値: null。 */
     export let shoulder: string | null = null;
+    /** 見出し左側に縦長の装飾チップを表示する。既定値: false。 */
     export let chip: boolean = false;
+    /** 先頭に装飾アイコンを表示する。icon slotがあればfalseでも表示。既定値: false。 */
     export let icon: boolean = false;
+    /** 下線の太さを文字列で指定。未指定なら下線なし。既定値: undefined。 */
     export let rule: '8' | '6' | '4' | '2' | undefined = undefined;
+    /** 内部の見出し要素のID。外側ではなくアンカーやaria-labelledbyの参照先に使う。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** 外側のdiv／hgroupのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 
     $: hasShoulder = Boolean(shoulder || $$slots.shoulder);

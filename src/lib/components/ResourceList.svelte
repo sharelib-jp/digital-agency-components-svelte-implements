@@ -65,12 +65,19 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
+    /** 表示項目。IDは必須・一意。checkbox／radio操作で配列を更新し、bind:itemsで受け取る。既定値: []。 */
     export let items: ResourceListItem[] = [];
+    /** 共通の外観。listは下罫線、frameは枠付き。項目のstyleが優先され、CSS文字列ではない。既定値: 'list'。 */
     export let style: ResourceListStyle = 'list';
+    /** リンク／入力の操作範囲。inlineはタイトル／入力、wholeは本文全体。項目の指定が優先。既定値: 'inline'。 */
     export let interaction: ResourceListInteraction = 'inline';
+    /** 通常・リンク項目のタイトルの見出し要素。checkbox／radioでは常にp内のlabel。既定値: 'h2'。 */
     export let headingLevel: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h2';
+    /** 行間。値を16で割ったrem値を--resource-list-gapに設定する。既定値: 16。 */
     export let gap: number = 16;
+    /** 共通の角丸をなくす。項目のsquareが優先される。既定値: false。 */
     export let square: boolean = false;
+    /** 外側のulのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 
     const dispatch = createEventDispatcher<{

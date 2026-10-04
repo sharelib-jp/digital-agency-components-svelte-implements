@@ -1,18 +1,31 @@
 <script lang="ts">
     import FormControlLabel from './FormControlLabel.svelte';
 
+    /** 必須の一意なID。on-offではinput、modeでは左buttonに設定し、右buttonや説明文の派生IDにも使います。 */
     export let id: string;
+    /** オン・オフのcheckboxまたは2モードのbutton表示を選びます。既定値: 'on-off'。 */
     export let type: 'on-off' | 'mode' = 'on-off';
+    /** on-offのinputのname属性（送信名）。modeでは使いません。既定値: undefined。 */
     export let name: string | undefined = undefined;
+    /** on-offがオンの場合の送信値。modeでは使いません。既定値: 'on'。 */
     export let value: string = 'on';
+    /** オン状態。modeではfalseが左、trueが右の有効状態です。`bind:checked`対応。既定値: false。 */
     export let checked: boolean = false;
+    /** 項目名。on-offではlabel、modeではlegendとして表示します。既定値: ''。 */
     export let label: string = '';
+    /** modeの左buttonの文言。on-offでは使いません。既定値: 'モード1'。 */
     export let leftLabel: string = 'モード1';
+    /** modeの右buttonの文言。on-offでは使いません。既定値: 'モード2'。 */
     export let rightLabel: string = 'モード2';
+    /** on-offのinputまたはmodeの両buttonをネイティブに無効化します。既定値: false。 */
     export let disabled: boolean = false;
+    /** 必須表示。on-offではネイティブ必須制約、modeではaria-requiredのみを設定します。既定値: false。 */
     export let required: boolean = false;
+    /** 操作要素の前に表示する補足文。空文字列では非表示です。既定値: null。 */
     export let supportText: string | null = null;
+    /** 後ろに表示するエラー文。非空なら`aria-invalid="true"`も設定しますが、ネイティブ検証は変更しません。既定値: null。 */
     export let errorText: string | null = null;
+    /** 外側のfieldsetのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     $: supportTextId = supportText ? `${id}-support-text` : undefined;

@@ -17,28 +17,51 @@
     import { createEventDispatcher } from 'svelte';
     import type { HTMLInputAttributes } from 'svelte/elements';
 
+    /** 検索入力のid属性。フォームのIDではありません。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** 入力と検索ボタンのサイズ。smでは検索対象ラベルを視覚的に隠します。既定値: 'lg'。 */
     export let size: 'lg' | 'md' | 'sm' = 'lg';
+    /** 検索語。`bind:value`で入力と親の状態を同期できます。既定値: ''。 */
     export let value: string = '';
+    /** 検索入力のname属性（送信フィールド名）。既定値: 'q'。 */
     export let name: string = 'q';
+    /** 検索入力の視覚的に非表示のラベル。既定値: '検索'。 */
     export let label: string = '検索';
+    /** 検索フォームのaria-label属性。入力のラベルとは別に指定します。既定値: 'サイト内検索'。 */
     export let formLabel: string = 'サイト内検索';
+    /** 検索入力のaria-labelledby属性。実在する外部ラベルのIDを指定します。既定値: undefined。 */
     export let ariaLabelledby: string | undefined = undefined;
+    /** 検索入力のプレースホルダー。ラベルの代わりにはなりません。既定値: ''。 */
     export let placeholder: string = '';
+    /** 検索入力のautocomplete属性。既定値: 'off'。 */
     export let autocomplete: NonNullable<HTMLInputAttributes['autocomplete']> = 'off';
+    /** 検索語の入力を必須にします。詳細条件には適用しません。既定値: false。 */
     export let required: boolean = false;
+    /** 検索入力だけを読み取り専用にします。検索対象・詳細条件の操作や送信は可能です。既定値: false。 */
     export let readonly: boolean = false;
+    /** 入力・検索対象・検索/resetボタン・詳細条件を無効にします。詳細領域の開閉は可能です。既定値: false。 */
     export let disabled: boolean = false;
+    /** フォームのaction属性（送信先）。ネイティブ送信には`preventDefault={false}`が必要です。既定値: undefined。 */
     export let action: string | undefined = undefined;
+    /** フォームのmethod属性（送信方法）。既定値: 'get'。 */
     export let method: 'get' | 'post' = 'get';
+    /** submit時にネイティブ送信を止めます。searchイベントの発火は止めません。既定値: true。 */
     export let preventDefault: boolean = true;
+    /** 通常領域・詳細領域の検索ボタンの文言。既定値: '検索'。 */
     export let buttonLabel: string = '検索';
+    /** 検索対象の選択肢。空配列ではセレクトを描画しません。既定値: []。 */
     export let scopeOptions: SearchScopeOption[] = [];
+    /** 検索対象の選択値。`bind:scope`対応。選択肢がある場合、不一致なら先頭の有効な値へ、全て無効なら空文字列へ補正します。 */
     export let scope: string = '';
+    /** 検索対象セレクトのname属性（送信フィールド名）。既定値: 'scope'。 */
     export let scopeName: string = 'scope';
+    /** 検索対象セレクトのラベル。既定値: '検索対象'。 */
     export let scopeLabel: string = '検索対象';
+    /** detailスロットがある場合に表示するsummaryの文言。既定値: '詳細検索'。 */
     export let detailLabel: string = '詳細検索';
+    /** 詳細領域の開閉状態。`bind:detailOpen`対応。detailスロットがある場合だけ反映します。既定値: false。 */
     export let detailOpen: boolean = false;
+    /** 詳細領域のresetボタンの文言。resetは既定値へ戻す操作で、必ず空にする処理ではありません。既定値: '検索条件をクリア'。 */
     export let resetLabel: string = '検索条件をクリア';
 
     const dispatch = createEventDispatcher<{

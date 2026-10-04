@@ -4,21 +4,37 @@
     type CloseReason = 'button' | 'action' | 'cancel' | 'binding' | 'native';
 
     // 呼び出し元で一意のIDを指定し、SSRとhydrationで同じ関連付けを使う。
+    /** 必須のdialogのID。SSRとクライアントで同じ一意な値を指定し、-heading／-descriptionのID生成にも使う。 */
     export let id: string;
+    /** ルートのdialogのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
+    /** 開閉状態。bind:open対応。マウント後にshowModal()／close()と同期し、HTML open属性は直接描画しない。既定値: false。 */
     export let open: boolean = false;
+    /** h2の見出しテキスト。heading slotが優先される。既定値: 'タイトル'。 */
     export let heading: string = 'タイトル';
+    /** 本文の文字列。デフォルトslotが優先され、p要素では包まない。既定値: ''。 */
     export let message: string = '';
+    /** 説明文。空でない値またはdescription slotがあれば説明用のp要素を表示。既定値: null。 */
     export let description: string | null = null;
+    /** aria-describedbyに追加する実在する説明要素のID。複数は空白区切りで、内部の説明IDと併記。既定値: undefined。 */
     export let describedBy: string | undefined = undefined;
+    /** ヘッダーの閉じるボタンを表示する。falseでもEscapeは無効にならない。既定値: true。 */
     export let hasCloseButton: boolean = true;
+    /** ヘッダーの閉じるボタンの表示テキスト。既定値: '閉じる'。 */
     export let closeLabel: string = '閉じる';
+    /** 操作領域を表示する。falseではactions slotも描画しない。既定値: true。 */
     export let hasActions: boolean = true;
+    /** actions slot未指定時の既定ボタンのテキスト。既定値: 'OK'。 */
     export let actionLabel: string = 'OK';
+    /** スクロール位置。outerはdialog領域、innerはパネル内部。既定値: 'outer'。 */
     export let scroll: 'outer' | 'inner' = 'outer';
+    /** scroll="inner"のときヘッダーをスクロール領域の外に置く。既定値: false。 */
     export let fixedHeader: boolean = false;
+    /** scroll="inner"のとき操作領域をスクロール領域の外に置く。既定値: false。 */
     export let fixedActions: boolean = false;
+    /** パネル幅のCSS値。--modal-dialog-widthに設定し、表示領域の制約内で適用。既定値: 'fit-content'。 */
     export let width: string = 'fit-content';
+    /** 開いたときのフォーカス先。dialog内部のフォーカス可能な要素を指定し、未指定・外部なら見出しを使う。既定値: null。 */
     export let initialFocus: HTMLElement | null = null;
 
     const dispatch = createEventDispatcher<{

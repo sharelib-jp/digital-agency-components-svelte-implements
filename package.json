@@ -1,6 +1,6 @@
 {
   "name": "@sharelib-jp/digital-agency-components-svelte-implements",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -37,7 +37,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "build": "svelte-package",
+    "build": "svelte-package && node scripts/add-declaration-docs.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test:components": "node scripts/run-component-tests.mjs",
     "test:components:browser": "node scripts/run-component-tests.mjs --browser",
@@ -54,6 +54,7 @@
     "svelte": "^5.56.1",
     "svelte-check": "^4.6.0",
     "typescript": "^6.0.3",
+    "typescript-svelte-plugin": "^0.3.52",
     "vite": "^8.0.16"
   }
 }

@@ -1,6 +1,9 @@
 <script lang="ts">
+    /** a要素のhref属性（リンク先URL）。有効な遷移先を明示してください。既定値: ''。 */
     export let href: string = "";
+    /** リンクの表示テキスト。リンク先が分かる内容を指定します。既定値: ''。 */
     export let label: string = "";
+    /** targetを'_blank'にし、新規タブ用アイコンを表示します。rel属性は自動設定しません。既定値: false。 */
     export let blank: boolean = false;
 </script>
 

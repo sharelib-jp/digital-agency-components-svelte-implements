@@ -24,10 +24,15 @@
 <script lang="ts">
     import { createEventDispatcher, tick } from 'svelte';
 
+    /** 最上位の項目。childrenで1段のサブメニューを指定し、親・子のIDは一意にする。既定値: []。 */
     export let items: HorizontalMenuItem[] = [];
+    /** 外側のnav要素のaria-label。既定値: 'メインメニュー'。 */
     export let label: string = 'メインメニュー';
+    /** 現在項目のID。nullなら各項目のcurrentを参照。選択時の更新はbind:selectedIdで受け取る。既定値: null。 */
     export let selectedId: string | null = null;
+    /** 開いている親のID。bind:expandedId対応。nullで閉じ、不正・無効な親のIDはnullに補正。既定値: null。 */
     export let expandedId: string | null = null;
+    /** 全項目を無効にし、開いているサブメニューを閉じる。既定値: false。 */
     export let disabled: boolean = false;
 
     let menuElement: HTMLUListElement;

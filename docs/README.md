@@ -1,35 +1,36 @@
 # コンポーネントドキュメント
 
-現在実装している24コンポーネントを、コンポーネントごとの Markdown ファイルにまとめています。各ファイルには使用例、props の型・既定値、バインド・イベント・スロット、実装上の注意点を記載しています。
+現在実装している25コンポーネントを、コンポーネントごとの Markdown ファイルにまとめています。各ファイルには使用例、props の型・既定値、バインド・イベント・スロット、実装上の注意点を記載しています。
 
 ## 一覧
 
-| コンポーネント       | 用途                                         | ドキュメント                                          |
-| -------------------- | -------------------------------------------- | ----------------------------------------------------- |
-| `Button`             | 操作を表すボタン                             | [ボタン](./Button.md)                                 |
-| `Link`               | ページ・文書へのリンク                       | [リンク](./Link.md)                                   |
-| `Image`              | 枠線・キャプション・リンク付き画像           | [画像](./Image.md)                                    |
-| `Heading`            | 見出し階層、サイズ、ショルダー、チップ、下線 | [見出し](./Heading.md)                                |
-| `Divider`            | 主題の区切り・装飾線                         | [ディバイダー](./Divider.md)                          |
-| `FormControlLabel`   | 入力欄のラベルと必須・任意・補助文           | [フォームコントロールラベル](./FormControlLabel.md)   |
-| `InputText`          | 1行テキスト入力                              | [インプットテキスト](./InputText.md)                  |
-| `Textarea`           | 複数行入力と文字数カウンター                 | [テキストエリア](./Textarea.md)                       |
-| `Checkbox`           | 複数選択、同意、中間状態                     | [チェックボックス](./Checkbox.md)                     |
-| `RadioButton`        | 選択肢からの単一選択                         | [ラジオボタン](./RadioButton.md)                      |
-| `Switch`             | オン・オフ、2つのモードの切り替え            | [スイッチ](./Switch.md)                               |
-| `SearchBox`          | キーワード・対象選択・詳細条件付き検索       | [検索ボックス](./SearchBox.md)                        |
-| `HorizontalMenu`     | 水平メニューとサブメニュー                   | [水平メニュー](./HorizontalMenu.md)                   |
-| `PageNavigation`     | 前後のページへの移動                         | [ページナビゲーション](./PageNavigation.md)           |
-| `ResourceList`       | リンク・チェックボックス・ラジオ付きのリスト | [リソースリスト](./ResourceList.md)                   |
-| `EmergencyBanner`    | 緊急のお知らせと詳細へのリンク               | [緊急時バナー](./EmergencyBanner.md)                  |
-| `NotificationBanner` | 種別付き通知、閉じられる通知                 | [ノティフィケーションバナー](./NotificationBanner.md) |
-| `ModalDialog`        | モーダル表示、確認操作、スクロール構成       | [モーダルダイアログ](./ModalDialog.md)                |
-| `MenuList`           | リンク・操作・階層付きメニュー               | [メニューリスト](./MenuList.md)                       |
-| `MenuListBox`        | 開閉可能なメニューポップアップ               | [メニューリストボックス](./MenuListBox.md)            |
-| `ProgressIndicator`  | 確定・不確定進捗、処理中の通知               | [プログレスインジケーター](./ProgressIndicator.md)    |
-| `FileUpload`         | ファイル選択・ドロップ・検証・解除           | [ファイルアップロード](./FileUpload.md)               |
-| `StepNavigation`     | 手順の現在位置と進行状態                     | [ステップナビゲーション](./StepNavigation.md)         |
-| `DatePicker`         | 年月日入力とカレンダーによる日付選択         | [日付ピッカー](./DatePicker.md)                       |
+| コンポーネント       | 用途                                             | ドキュメント                                          |
+| -------------------- | ------------------------------------------------ | ----------------------------------------------------- |
+| `Button`             | 操作を表すボタン                                 | [ボタン](./Button.md)                                 |
+| `Card`               | props・子要素で内容を渡すシンプルなカード | [カード](./Card.md)                                   |
+| `Link`               | ページ・文書へのリンク                           | [リンク](./Link.md)                                   |
+| `Image`              | 枠線・キャプション・リンク付き画像               | [画像](./Image.md)                                    |
+| `Heading`            | 見出し階層、サイズ、ショルダー、チップ、下線     | [見出し](./Heading.md)                                |
+| `Divider`            | 主題の区切り・装飾線                             | [ディバイダー](./Divider.md)                          |
+| `FormControlLabel`   | 入力欄のラベルと必須・任意・補助文               | [フォームコントロールラベル](./FormControlLabel.md)   |
+| `InputText`          | 1行テキスト入力                                  | [インプットテキスト](./InputText.md)                  |
+| `Textarea`           | 複数行入力と文字数カウンター                     | [テキストエリア](./Textarea.md)                       |
+| `Checkbox`           | 複数選択、同意、中間状態                         | [チェックボックス](./Checkbox.md)                     |
+| `RadioButton`        | 選択肢からの単一選択                             | [ラジオボタン](./RadioButton.md)                      |
+| `Switch`             | オン・オフ、2つのモードの切り替え                | [スイッチ](./Switch.md)                               |
+| `SearchBox`          | キーワード・対象選択・詳細条件付き検索           | [検索ボックス](./SearchBox.md)                        |
+| `HorizontalMenu`     | 水平メニューとサブメニュー                       | [水平メニュー](./HorizontalMenu.md)                   |
+| `PageNavigation`     | 前後のページへの移動                             | [ページナビゲーション](./PageNavigation.md)           |
+| `ResourceList`       | リンク・チェックボックス・ラジオ付きのリスト     | [リソースリスト](./ResourceList.md)                   |
+| `EmergencyBanner`    | 緊急のお知らせと詳細へのリンク                   | [緊急時バナー](./EmergencyBanner.md)                  |
+| `NotificationBanner` | 種別付き通知、閉じられる通知                     | [ノティフィケーションバナー](./NotificationBanner.md) |
+| `ModalDialog`        | モーダル表示、確認操作、スクロール構成           | [モーダルダイアログ](./ModalDialog.md)                |
+| `MenuList`           | リンク・操作・階層付きメニュー                   | [メニューリスト](./MenuList.md)                       |
+| `MenuListBox`        | 開閉可能なメニューポップアップ                   | [メニューリストボックス](./MenuListBox.md)            |
+| `ProgressIndicator`  | 確定・不確定進捗、処理中の通知                   | [プログレスインジケーター](./ProgressIndicator.md)    |
+| `FileUpload`         | ファイル選択・ドロップ・検証・解除               | [ファイルアップロード](./FileUpload.md)               |
+| `StepNavigation`     | 手順の現在位置と進行状態                         | [ステップナビゲーション](./StepNavigation.md)         |
+| `DatePicker`         | 年月日入力とカレンダーによる日付選択             | [日付ピッカー](./DatePicker.md)                       |
 
 ## 共通の準備
 

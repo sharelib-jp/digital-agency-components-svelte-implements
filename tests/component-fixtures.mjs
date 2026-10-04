@@ -1,4 +1,5 @@
 export const fixtures = {
+  Card: { title: "お知らせ", content: "申請を受け付けています。" },
   Image: { src: "/test-image.png", alt: "庁舎の正面", caption: "図の説明" },
   EmergencyBanner: {
     heading: "緊急情報",
@@ -60,6 +61,7 @@ export const fixtures = {
   DatePicker: { id: "date", name: "date", value: "2024-02-29" },
 };
 export const representativeTags = {
+  Card: ["div", { class: "dads-card" }],
   Image: ["img", { alt: "庁舎の正面" }],
   EmergencyBanner: ["article", { class: "dads-emergency-banner" }],
   SearchBox: ["input", { type: "search", value: "税金" }],

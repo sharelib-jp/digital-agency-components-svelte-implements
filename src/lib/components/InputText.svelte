@@ -1,15 +1,24 @@
 <script lang="ts">
     import FormControlLabel from './FormControlLabel.svelte';
 
+    /** 内部inputのID。省略時はUUIDで生成するため、SSRでは一意の値の明示指定を推奨します。 */
     export let id: string | undefined = undefined;
+    /** 入力欄の高さを決めるサイズ。既定値: 'sm'。 */
     export let size: 'sm' | 'md' | 'lg' = 'sm';
+    /** 入力欄を読み取り専用にし、ユーザーによる編集を禁止します。既定値: false。 */
     export let readonly: boolean = false;
+    /** 内部inputを無効にします。既定値: false。 */
     export let disabled: boolean = false;
+    /** 入力値。`bind:value`で親と双方向に同期できます。既定値: ''。 */
     export let value: string = '';
+    /** エラー文。非空なら表示と`aria-invalid="true"`を設定しますが、ネイティブ検証は変更しません。既定値: null。 */
     export let errorText: string | null = null;
 
+    /** 入力に関連付けるラベル。空文字列では内部ラベルを表示しません。既定値: ''。 */
     export let label: string = '';
+    /** 入力のrequired属性と、ラベルがある場合の必須表示を設定します。既定値: false。 */
     export let required: boolean = false;
+    /** ラベルの下に表示する補助文。表示には空でないlabelが必要です。既定値: null。 */
     export let supportText: string | null = null;
 
     const generatedId = `input-${crypto.randomUUID()}`;

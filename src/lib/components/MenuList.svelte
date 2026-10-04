@@ -31,16 +31,27 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
+    /** ルートのul要素のID。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** 表示項目。再帰的なchildrenは常時表示され、親・子孫のIDは一意にする。既定値: []。 */
     export let items: MenuListItem[] = [];
+    /** ul要素のaria-label。必要に応じて指定する。既定値: undefined。 */
     export let label: string | undefined = undefined;
+    /** 項目の外観。standardは角丸、boxは矩形。既定値: 'standard'。 */
     export let type: 'standard' | 'box' = 'standard';
+    /** 項目の表示サイズ。既定値: 'regular'。 */
     export let size: 'regular' | 'small' = 'regular';
+    /** 現在項目のID。nullなら各項目のcurrentを参照。選択時の更新はbind:selectedIdで受け取る。既定値: null。 */
     export let selectedId: string | null = null;
+    /** 全項目と子孫を無効にする。既定値: false。 */
     export let disabled: boolean = false;
+    /** インデント段数。非負の有限数を指定し、子リストでは1ずつ増える。既定値: 0。 */
     export let indentation: number = 0;
+    /** ulのrole。menuは平坦な項目向けで、キーボード制御はMenuListBox側で行う。既定値: 'list'。 */
     export let role: 'list' | 'menu' = 'list';
+    /** role="menu"でtabindex="0"にする有効な項目のID。フォーカスは移動しない。既定値: null。 */
     export let activeId: string | null = null;
+    /** ルートのulのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 
     const dispatch = createEventDispatcher<{ select: MenuListSelectDetail }>();

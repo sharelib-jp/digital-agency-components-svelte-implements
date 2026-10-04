@@ -32,19 +32,33 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
+    /** 表示順のステップ。各項目のIDは必須・一意にする。既定値: []。 */
     export let steps: StepNavigationStep[] = [];
+    /** fullは全項目、singleは現在の1項目を表示。singleで現在項目がなければ先頭を表示する。既定値: 'full'。 */
     export let variant: StepNavigationVariant = 'full';
+    /** ステップの配置方向。横方向では必要に応じてスクロールする。既定値: 'horizontal'。 */
     export let orientation: StepNavigationOrientation = 'horizontal';
+    /** 番号・タイトルなどの表示サイズ。既定値: 'normal'。 */
     export let size: StepNavigationSize = 'normal';
+    /** 現在ステップのID。nullなら最初のcurrent項目を参照。ボタン操作の更新はbind:currentIdで受け取る。既定値: null。 */
     export let currentId: string | null = null;
+    /** すべてのリンク／ボタン操作を無効にする。既定値: false。 */
     export let disabled: boolean = false;
+    /** nav要素のaria-label。用途に応じた名前を指定する。既定値: 'ステップ'。 */
     export let label: string = 'ステップ';
+    /** 各番号の前に置く視覚的に非表示の文言。既定値: 'ステップ'。 */
     export let stepLabel: string = 'ステップ';
+    /** 視覚的に非表示の進捗説明。未指定時はステップ数と到達状況から自動生成し、空文字なら省略。 */
     export let summary: string | undefined = undefined;
+    /** タイトルと説明を省略する。番号・状態文言・アイコンは残す。既定値: false。 */
     export let numberOnly: boolean = false;
+    /** 横方向の項目幅。値を16で割ってrem換算し、非負の有限数以外は320を使う。既定値: 320。 */
     export let stepWidth: number = 320;
+    /** 横方向の項目最小幅。値を16で割ってrem換算し、非負の有限数以外は160を使う。既定値: 160。 */
     export let stepMinWidth: number = 160;
+    /** ルートのnav要素のDOM ID。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** ルートのnavのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
 
     const dispatch = createEventDispatcher<{ select: StepNavigationSelectDetail }>();

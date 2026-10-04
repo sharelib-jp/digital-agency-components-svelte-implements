@@ -13,14 +13,23 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
+    /** 前後コントロールの外観（テキスト・枠付き・円形矢印）。既定値: 'text'。 */
     export let type: PageNavigationType = 'text';
+    /** 前後コントロールのサイズ。未指定時はtypeがtextならmd、それ以外ならlgを使う。 */
     export let size: PageNavigationSize | undefined = undefined;
+    /** 現在ページ。範囲内の整数へ補正され、ボタン操作時の更新をbind:currentPageで受け取る。既定値: 1。 */
     export let currentPage: number = 1;
+    /** 総ページ数。内部で非負の安全な整数に補正し、0／1ページなら全体を描画しない。既定値: 1。 */
     export let totalPages: number = 1;
+    /** 前後コントロールを無効にする。表示中のカウンターは残る。既定値: false。 */
     export let disabled: boolean = false;
+    /** 外側のnavのaria-label。カウンターの接頭辞ではない。既定値: 'ページ'。 */
     export let label: string = 'ページ';
+    /** 前のページの文言。矢印型では視覚的に非表示のラベル。既定値: '前のページ'。 */
     export let previousLabel: string = '前のページ';
+    /** 次のページの文言。矢印型では視覚的に非表示のラベル。既定値: '次のページ'。 */
     export let nextLabel: string = '次のページ';
+    /** 対象ページ番号からURLを返す関数。指定時はリンク方式となり、操作でcurrentPageを更新しない。既定値: undefined。 */
     export let hrefForPage: ((page: number) => string) | undefined = undefined;
 
     const dispatch = createEventDispatcher<{ change: PageNavigationChangeDetail }>();

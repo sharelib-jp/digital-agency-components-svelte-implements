@@ -109,22 +109,39 @@
 <script lang="ts">
     import { createEventDispatcher, onMount, tick } from 'svelte';
 
+    /** 必須のfieldsetのID。空・空白のみは不可。SSRでも一致する一意の値を指定し、内部要素のID生成にも使います。 */
     export let id: string;
+    /** 日付を送るhidden inputのname属性。年・月・日の入力は個別に送信しません。既定値: undefined。 */
     export let name: string | undefined = undefined;
+    /** 関連付ける外部フォームのID（form属性）。未指定時は祖先フォームを使います。既定値: undefined。 */
     export let form: string | undefined = undefined;
+    /** 年月日の入力を統合型または分割型で表示します。既定値: 'consolidated'。 */
     export let type: DatePickerType = 'consolidated';
+    /** 入力欄とカレンダー開閉ボタンのサイズ。既定値: 'md'。 */
     export let size: DatePickerSize = 'md';
+    /** 入力日付（YYYY-MM-DDまたは空文字列）。`bind:value`対応。不正・未完成・範囲外の入力は空文字列になります。既定値: ''。 */
     export let value: string = '';
+    /** カレンダーの開閉状態。`bind:open`対応。無効・読み取り専用・カレンダーなしでは閉じます。既定値: false。 */
     export let open: boolean = false;
+    /** カレンダーを利用するか。falseでは年月日の入力だけを表示します。既定値: true。 */
     export let calendar: boolean = true;
+    /** 入力・選択できる最小日（当日を含むYYYY-MM-DD）。未指定時の下限は0001-01-01です。既定値: ''。 */
     export let minDate: string = '';
+    /** 入力・選択できる最大日（当日を含むYYYY-MM-DD）。未指定時の上限は9999-12-31です。既定値: ''。 */
     export let maxDate: string = '';
+    /** legendに表示するグループラベル。入力目的が分かる空でない値を指定します。既定値: '日付'。 */
     export let label: string = '日付';
+    /** 年・月・日の全入力を必須にし、ラベルに必須表示を付けます。既定値: false。 */
     export let required: boolean = false;
+    /** 編集とカレンダー操作を禁止し、編集不可と表示します。値は送信対象に残ります。既定値: false。 */
     export let readonly: boolean = false;
+    /** 入力とカレンダー操作を無効にし、値をフォーム送信の対象から外します。既定値: false。 */
     export let disabled: boolean = false;
+    /** ラベルの下に表示する補助文。各入力のaria-describedbyに関連付けます。既定値: null。 */
     export let supportText: string | null = null;
+    /** 内部検証文より優先する外部エラー文。表示・ARIA用で、このprop自体はネイティブ検証を変更しません。既定値: null。 */
     export let errorText: string | null = null;
+    /** ルートのfieldsetのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     const dispatch = createEventDispatcher<DatePickerEvents>();

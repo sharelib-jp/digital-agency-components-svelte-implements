@@ -1,17 +1,29 @@
 <script lang="ts">
     import { onMount } from 'svelte';
 
+    /** 必須の内部inputのID。ページ内で一意にし、ラベルと補足・エラー文の関連付けに使います。 */
     export let id: string;
+    /** 必須のname属性（グループ名・送信名）。同じ選択肢群ではnameと`bind:group`の親変数を共有します。 */
     export let name: string;
+    /** この選択肢の値。選択時にgroupへ代入します。グループ内で重複させないでください。既定値: ''。 */
     export let value: string | number = '';
+    /** グループの現在値。`bind:group`対応。valueとの厳密等価で選択を判定し、フォームresetで生成時の値に戻します。既定値: null。 */
     export let group: string | number | null = null;
+    /** ラジオボタンの横に表示するラベル。既定値: ''。 */
     export let label: string = '';
+    /** ラジオボタンとラベルの寸法・間隔。既定値: 'sm'。 */
     export let size: 'sm' | 'md' | 'lg' = 'sm';
+    /** 内部inputを無効にし、操作・フォーカス・フォーム送信の対象から外します。既定値: false。 */
     export let disabled: boolean = false;
+    /** グループから1つの選択を求めるネイティブ必須制約。既定値: false。 */
     export let required: boolean = false;
+    /** エラー配色と`aria-invalid="true"`を設定します。自動検証は行いません。既定値: false。 */
     export let errored: boolean = false;
+    /** ラジオボタンの前に表示する補足文。空文字列では非表示です。既定値: null。 */
     export let supportText: string | null = null;
+    /** 後ろに表示するエラー文。非空なら`aria-invalid="true"`も設定しますが、ネイティブ検証は変更しません。既定値: null。 */
     export let errorText: string | null = null;
+    /** 外側のdivのclass属性に追加するCSSクラス。大文字のCで指定します。既定値: ''。 */
     export let Class: string = '';
 
     const initialGroup = group;

@@ -3,19 +3,33 @@
 
     type NotificationType = 'success' | 'error' | 'warning' | 'info-1' | 'info-2';
 
+    /** ルートのdiv要素のID。既定値: undefined。 */
     export let id: string | undefined = undefined;
+    /** ルートのHTML class属性に追加するクラス。大文字のCで指定。既定値: ''。 */
     export let Class: string = '';
+    /** 通知種別。アイコン・配色・未指定時のroleを決める。既定値: 'info-1'。 */
     export let type: NotificationType = 'info-1';
+    /** 囲み枠・左側カラーチップの外観。CSSのstyle文字列ではない。既定値: 'standard'。 */
     export let style: 'standard' | 'color-chip' = 'standard';
+    /** 表示状態。bind:open対応。falseではバナーをDOMから取り除く。既定値: true。 */
     export let open: boolean = true;
+    /** 組み込みの閉じるボタンを表示する。slotのclose()は無効化しない。既定値: true。 */
     export let dismissible: boolean = true;
+    /** 閉じるボタンの外観。mobile-compactは画面幅での自動切り替えではない。既定値: 'standard'。 */
     export let closeButton: 'standard' | 'mobile-compact' = 'standard';
+    /** 閉じるボタンのaria-label。通常形式では表示テキストにも使う。既定値: '閉じる'。 */
     export let closeLabel: string = '閉じる';
+    /** h2の見出しテキスト。heading slotが優先される。既定値: 'お知らせ'。 */
     export let heading: string = 'お知らせ';
+    /** 本文。デフォルトslot未指定時、空でなければp要素で表示。既定値: ''。 */
     export let message: string = '';
+    /** 表示用の日時。空文字なら時刻を表示しない。既定値: ''。 */
     export let timestamp: string = '';
+    /** time要素の機械可読なdatetime属性。timestampと組み合わせて指定。既定値: undefined。 */
     export let datetime: string | undefined = undefined;
+    /** ルートのrole。未指定時はerror／warningでalert、それ以外でstatusを使う。 */
     export let role: 'status' | 'alert' | undefined = undefined;
+    /** ルートのaria-live属性。未指定なら属性を付けず、roleの暗黙の通知特性を使う。既定値: undefined。 */
     export let ariaLive: 'off' | 'polite' | 'assertive' | undefined = undefined;
 
     const dispatch = createEventDispatcher<{ close: undefined }>();
