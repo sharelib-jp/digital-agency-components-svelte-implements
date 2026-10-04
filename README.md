@@ -129,16 +129,47 @@ node --test tests/date-picker.browser.test.mjs
 
 既存の Button / InputText の未使用 CSS 警告12件は、移動に伴って変更していません。
 
+## Storybook
+
+Storybook で全25コンポーネントのデモとドキュメントを確認できます。依存をインストールした後、次のコマンドを使用します。
+
+```sh
+# ローカル開発サーバー（http://localhost:6006）
+pnpm storybook
+
+# Storybook の型チェック
+pnpm check:storybook
+
+# 静的サイトの生成と検証（この順に実行）
+pnpm build:storybook
+pnpm test:storybook
+```
+
+`build:storybook` の出力先は `storybook-static/` です。`test:storybook` は生成済みの静的ビルドを検証するコマンドで、ブラウザー操作テストではありません。Storybook はデモサイトとして公開し、GitHub Packages の配布物には含めません。
+
+### GitHub Pages の設定
+
+- リポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に設定します。
+- 予定公開URL: https://sharelib-jp.github.io/digital-agency-components-svelte-implements/
+- Pages 公開には GitHub が自動発行する **`GITHUB_TOKEN`** と **OIDC** を使用します。公開用 PAT や追加の Actions secret は不要です。設定取得用の `pages: read` は検証ジョブに、`pages: write` / `id-token: write` はデプロイジョブに限定しています。
+- 組織の Actions / Pages ポリシーで利用が制限されている場合は、管理者に許可を依頼してください。private リポジトリからの Pages 公開には対応プランが必要です（個人アカウントは GitHub Pro 以上、組織は GitHub Team / GitHub Enterprise）。private リポジトリだからといってサイトも非公開になるわけではありません。
+- **公開サイトのデモ・ドキュメント・ソースコード例は閲覧可能になり、配信する JavaScript にも実装が含まれます。** 機密情報やトークン、実データを Stories に含めないでください。
+- `github-pages` environment にブランチ制限や承認ルールがある場合は、main からのデプロイを許可し、必要な承認を行ってください。
+
+CI の設定を追加しただけでは公開済みになりません。**実際の GitHub Pages デプロイは未検証**です。設定後に main の push または main を選んだ手動実行でデプロイし、Actions の `deploy-storybook` ジョブと公開URLを確認してください。
+
 ## GitHub Actions による公開・更新
 
 `.github/workflows/ci.yml` は次のように動作します。
 
-1. main への push、PR、手動実行で型・SSR・Firefox・ビルド・公開ガードを検証。
-2. 検証成功後、main の push / 手動実行に限り GitHub Packages を照会。
-3. `package.json` のバージョンが未公開の場合だけ GitHub Packages に公開。既公開のバージョンは skip。
+1. main への push、PR、手動実行で型・SSR・Firefox・パッケージビルド・公開ガードと Storybook の型・静的ビルドを検証。
+2. 検証成功後、main の push / main を選んだ手動実行に限り、Storybook を GitHub Pages にデプロイ。PR はビルド・検証のみで、Pages の設定取得・アップロード・デプロイは実行しません。
+3. 同じ条件で、検証成功後に別ジョブで GitHub Packages を照会し、`package.json` のバージョンが未公開の場合だけ公開。既公開のバージョンは skip。
 4. 実際にレジストリからダウンロードしたアーカイブと metadata を検証し、`github-package` Actions artifact に7日間保存。
 
-**コードの変更だけでは新しいバージョンを公開しません。** 新しいリリースでは必ずバージョンを上げます。同一バージョンの上書きはしません。
+**Storybook の更新にパッケージのバージョン変更は不要です。** Pages デプロイはパッケージ公開ジョブの結果に依存せず、検証成功後に実行します。GitHub Packages はこれまでどおり、コードの変更だけでは新しいバージョンを公開しません。新しいパッケージリリースでは必ずバージョンを上げます。同一バージョンの上書きはしません。
+
+CI はコミット済みの内容を使用します。`.storybook/`・`stories/`・Storybook 用スクリプトや設定などの**新規ファイルも含めて**変更を commit / push してください。依存・スクリプトを変更した場合は `package.json`・`pnpm-lock.yaml`・`pnpm-workspace.yaml` などの関連設定も含めます。生成物の `storybook-static/` や認証情報はコミットしません。
 
 ```sh
 npm version patch --no-git-tag-version
@@ -176,4 +207,5 @@ git push origin main
 
 - [Svelte のパッケージ化](https://svelte.dev/docs/kit/packaging)
 - [GitHub Packages npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry)
+- [GitHub Pages の公開元の設定](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 - [Dependabot の GitHub Packages アクセス](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot)

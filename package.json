@@ -39,6 +39,10 @@
   "scripts": {
     "build": "svelte-package && node scripts/add-declaration-docs.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build:storybook": "storybook build -o storybook-static",
+    "check:storybook": "svelte-check --tsconfig ./tsconfig.storybook.json",
+    "test:storybook": "node scripts/check-storybook.mjs",
     "test:components": "node scripts/run-component-tests.mjs",
     "test:components:browser": "node scripts/run-component-tests.mjs --browser",
     "test:publish-registry": "node --test tests/check-publish-registry.test.mjs",
@@ -50,7 +54,12 @@
     "svelte": "^5.56.1"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/svelte-vite": "10.6.1",
     "@sveltejs/package": "^3.0.0",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^24.19.1",
+    "storybook": "10.6.1",
     "svelte": "^5.56.1",
     "svelte-check": "^4.6.0",
     "typescript": "^6.0.3",

@@ -1,0 +1,10 @@
+body {
+  color: var(--color-neutral-solid-gray-800);
+  font-family: var(--font-family-sans);
+  line-height: 1.7;
+}
+
+#storybook-root {
+  max-width: calc(960 / 16 * 1rem);
+  min-width: 0;
+}

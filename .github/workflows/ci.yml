@@ -1,4 +1,4 @@
-name: CI and GitHub Packages
+name: CI, GitHub Packages and Storybook Pages
 
 on:
   push:
@@ -13,6 +13,9 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      pages: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,6 +55,9 @@ jobs:
       - name: Check types
         run: pnpm check
 
+      - name: Check Storybook types
+        run: pnpm check:storybook
+
       - name: Test components
         run: pnpm test:components
 
@@ -62,6 +68,47 @@ jobs:
 
       - name: Validate package exports and consumer type declarations
         run: pnpm test:package
+
+      - name: Build Storybook
+        run: pnpm build:storybook
+
+      - name: Validate the static Storybook build
+        run: pnpm test:storybook
+
+      - name: Configure GitHub Pages
+        if: >-
+          github.ref == 'refs/heads/main' &&
+          (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        uses: actions/configure-pages@v5
+
+      - name: Upload Storybook Pages artifact
+        if: >-
+          github.ref == 'refs/heads/main' &&
+          (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: storybook-static
+
+  deploy-storybook:
+    needs: checks
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    steps:
+      - name: Deploy Storybook to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   publish:
     needs: checks
