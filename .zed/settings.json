@@ -1,0 +1,24 @@
+{
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "tsserver": {
+            "pluginPaths": ["."]
+          }
+        },
+        "vtsls": {
+          "autoUseWorkspaceTsdk": true,
+          "tsserver": {
+            "globalPlugins": [
+              {
+                "name": "typescript-svelte-plugin",
+                "enableForWorkspaceTypeScriptVersions": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
