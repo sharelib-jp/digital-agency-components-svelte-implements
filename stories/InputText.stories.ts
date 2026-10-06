@@ -12,6 +12,8 @@ const meta = {
     id: "storybook-input-text-display-name",
     label: "表示名",
     size: "md",
+    fullWidth: false,
+    type: "text",
     value: "デジタル 太郎",
     supportText: "サービス内に表示する名前を入力してください。",
     errorText: null,
@@ -23,6 +25,16 @@ const meta = {
     id: { control: "text" },
     label: { control: "text" },
     size: { control: "select", options: ["sm", "md", "lg"] },
+    fullWidth: {
+      control: "boolean",
+      description:
+        "入力欄と外側のラベル領域を親要素の幅いっぱい（100%）に表示します。",
+    },
+    type: {
+      control: "select",
+      options: ["text", "password"],
+      description: "内部inputの種類。passwordでは入力内容をマスクします。",
+    },
     value: { control: "text" },
     supportText: {
       control: "text",
@@ -42,6 +54,22 @@ export const Default: Story = {};
 
 export const Large: Story = {
   args: { id: "storybook-input-text-large", size: "lg" },
+};
+
+/** 入力欄だけでなく、ラベル・補助文を含む外側の領域も親要素の幅に合わせます。 */
+export const FullWidth: Story = {
+  args: { id: "storybook-input-text-full-width", fullWidth: true },
+};
+
+/** マスク表示の動作確認用です。初期値は空にし、実際のパスワードは使用しません。 */
+export const Password: Story = {
+  args: {
+    id: "storybook-input-text-password",
+    label: "パスワード",
+    type: "password",
+    value: "",
+    supportText: "動作確認用です。実際のパスワードは入力しないでください。",
+  },
 };
 
 export const Readonly: Story = {

@@ -36,6 +36,7 @@
 | `value`                   | `string`               | いいえ | `''`                          | 入力内容。`bind:value`で双方向に同期できます。                                       |
 | `label`                   | `string`               | いいえ | `''`                          | textareaの前に表示するラベル。非空の場合だけlabel要素を描画します。                  |
 | `size`                    | `'sm' \| 'md' \| 'lg'` | いいえ | `'md'`                        | ラベルの文字サイズと周囲の間隔。入力欄の行数ではありません。                         |
+| `fullWidth`               | `boolean`              | いいえ | `false`                       | 入力欄と外側のラベル領域を親要素の幅いっぱい（100%）に表示します。                   |
 | `rows`                    | `number \| undefined`  | いいえ | `undefined`                   | nativeの表示行数。未指定ならブラウザーの既定値を使います。                           |
 | `cols`                    | `number \| undefined`  | いいえ | `undefined`                   | nativeの表示幅の目安。未指定ならブラウザーの既定値を使います。                       |
 | `readonly`                | `boolean`              | いいえ | `false`                       | 編集不可にします。フォーカス・コピー・フォーム送信は可能です。                       |
@@ -53,6 +54,29 @@
 3つのカウンタ用メッセージは、すべての`{count}`を数値に置換します。エラー・超過通知では超過数、残り通知では残り数です。画面のカウンタ表示はこれらの文言によらず「現在数 / counterMax」です。
 
 ## 状態別・組合せ使用例
+
+### 親要素の幅いっぱいに表示する
+
+`fullWidth`を指定すると、入力欄と外側のラベル領域がともに親要素の幅いっぱいに広がります。`cols`による幅の目安ではなく親要素の幅に合わせるため、幅の上限は親要素側で指定します。
+
+```svelte
+<script lang="ts">
+  import { Textarea } from '@sharelib-jp/digital-agency-components-svelte-implements';
+
+  let message = '';
+</script>
+
+<div style="width: 100%; max-width: 36rem;">
+  <Textarea
+    id="textarea-full-width"
+    label="お問い合わせ内容"
+    rows={5}
+    fullWidth
+    supportText="状況を具体的に記入してください。"
+    bind:value={message}
+  />
+</div>
+```
 
 ### 必須入力と文字数カウンタ
 
@@ -182,5 +206,5 @@
 - ラベルがあり、`readonly=false`の場合は、disabledでも「※必須」または「※任意」を表示します。`readonly=true`の場合は代わりに`readonlyText`を表示します。無効でないreadonlyの入力欄は破線になります。readonlyやdisabledのtextareaはnative制約検証の対象外です。
 - `name`があり、無効でなければ、空文字列やreadonlyの値もフォーム送信の対象です。`disabled`の値は送信されません。`aria-disabled="true"`はARIAと無効時の見た目だけで、編集・フォーカス・送信を止める処理はありません。
 - `errorText`は説明文とARIAの状態を設定しますが、それ自体はnative送信を止めません。業務ルールの検証は親で行ってください。カウンタ制御も`setCustomValidity()`を更新するため、外部から独自のカスタム検証を設定する場合は上書きに注意してください。
-- `rows`・`cols`にはnative属性として有効な正の整数を指定してください。入力欄は最大幅100%、縦方向のみリサイズ可能で、disabled相当の見た目ではリサイズを無効にします。`size`は主にラベル・間隔を変えるもので、行数や入力文字のサイズを変えません。
+- `rows`・`cols`にはnative属性として有効な正の整数を指定してください。入力欄は最大幅100%で、`fullWidth=true`では入力欄と外側のラベル領域の幅を100%にします。縦方向のみリサイズ可能で、disabled相当の見た目ではリサイズを無効にします。`size`は主にラベル・間隔を変えるもので、行数や入力文字のサイズを変えません。
 - フォーカス表示、forced-colors時の配色、読み上げ用live regionをカスタマイズで消さないでください。

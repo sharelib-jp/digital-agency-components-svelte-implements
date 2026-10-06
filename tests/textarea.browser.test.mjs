@@ -3,18 +3,21 @@ import { browserTest } from "./browser-test-helpers.mjs";
 
 const harnessSource = `<script>
     import Textarea from '../src/lib/components/Textarea.svelte';
+    import '../src/lib/global.css';
+    let fullWidth = false;
     let textareaValue = "ab";
     let events = [];
     function record(type, detail = {}) { events = [...events, { type, ...detail }]; }
     export function snapshot() { return { textareaValue, events }; }
     export function setState(patch) {
         if (Object.hasOwn(patch, 'textareaValue')) textareaValue = patch.textareaValue;
+                if (Object.hasOwn(patch, 'fullWidth')) fullWidth = patch.fullWidth;
     }
 </script>
 
 <main>
-<section id="textarea-fixture">
-        <Textarea id="textarea" label="メッセージ" counterMax={5} bind:value={textareaValue}
+<section id="textarea-fixture" style="width: 600px; max-width: 100%;">
+        <Textarea id="textarea" label="メッセージ" counterMax={5} {fullWidth} bind:value={textareaValue}
             on:input={(event) => record('textarea-input', { value: event.target.value })} />
     </section>
 </main>
@@ -24,6 +27,51 @@ browserTest(
   "Textarea browser behavior",
   harnessSource,
   async (t, page, runCase) => {
+    await runCase(
+      "Textarea: fullWidth fills its parent, follows resizing and restores intrinsic width",
+      async () => {
+        const initialWidth = await page.read(
+          "document.querySelector('#textarea').getBoundingClientRect().width",
+        );
+        assert.ok(
+          initialWidth < 600,
+          "Default textarea should keep its intrinsic width",
+        );
+        await page.setState({ fullWidth: true });
+        await page.expect(
+          "document.querySelector('#textarea').getBoundingClientRect().width",
+          600,
+        );
+        await page.expect(
+          "document.querySelector('#textarea-fixture .dads-form-control-label').getBoundingClientRect().width",
+          600,
+        );
+        await page.evaluate(
+          "document.querySelector('#textarea-fixture').style.width = '180px';",
+        );
+        await page.expect(
+          "document.querySelector('#textarea').getBoundingClientRect().width",
+          180,
+        );
+        await page.expect(
+          "document.querySelector('#textarea-fixture').scrollWidth <= document.querySelector('#textarea-fixture').clientWidth",
+          true,
+        );
+        await page.evaluate(
+          "document.querySelector('#textarea-fixture').style.width = '600px';",
+        );
+        await page.setState({ fullWidth: false });
+        await page.expect(
+          "document.querySelector('#textarea').getBoundingClientRect().width",
+          initialWidth,
+        );
+        await page.expect(
+          "document.querySelector('#textarea').dataset.fullWidth",
+          "false",
+        );
+      },
+    );
+
     await runCase(
       "Textarea: value binding, character counter, and native custom validity recover",
       async () => {

@@ -14,6 +14,7 @@ const meta = {
     label: "お問い合わせ内容",
     value: "オンライン申請の手続きについて教えてください。",
     size: "md",
+    fullWidth: false,
     rows: 5,
     cols: 40,
     readonly: false,
@@ -37,6 +38,11 @@ const meta = {
       control: "select",
       options: ["sm", "md", "lg"],
       description: "ラベルと間隔のサイズ。表示行数はrowsで指定します。",
+    },
+    fullWidth: {
+      control: "boolean",
+      description:
+        "入力欄と外側のラベル領域を親要素の幅いっぱい（100%）に表示します。",
     },
     rows: { control: { type: "number", min: 1, step: 1 } },
     cols: { control: { type: "number", min: 1, step: 1 } },
@@ -62,6 +68,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+/** colsによる幅の目安ではなく、ラベル領域と入力欄を親要素の幅に合わせます。 */
+export const FullWidth: Story = {
+  args: { id: "storybook-textarea-full-width", fullWidth: true },
+};
 
 export const CharacterCounter: Story = {
   args: {

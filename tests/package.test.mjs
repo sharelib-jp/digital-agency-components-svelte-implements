@@ -143,6 +143,14 @@ type ${name}PropsAreTyped = Assert<Equal<IsAny<${name}Props>, false>>;`,
   .join("\n")}
 export const buttonProps = { label: '登録する', size: 'md' } satisfies ButtonProps;
 export const dateProps = { id: 'date', type: 'consolidated' } satisfies DatePickerProps;
+export const inputProps = { id: 'password', type: 'password', fullWidth: true } satisfies InputTextProps;
+export const textareaProps = { id: 'message', fullWidth: true } satisfies TextareaProps;
+// @ts-expect-error InputText accepts only text or password.
+export const invalidInputType: InputTextProps = { type: 'number' };
+// @ts-expect-error InputText.fullWidth must be a boolean.
+export const invalidInputWidth: InputTextProps = { fullWidth: 'true' };
+// @ts-expect-error Textarea.fullWidth must be a boolean.
+export const invalidTextareaWidth: TextareaProps = { id: 'message', fullWidth: 'true' };
 export const cardProps = { title: 'お知らせ', content: '本文', headingLevel: 'h3' } satisfies CardProps;
 declare const cardSnippet: import('svelte').Snippet;
 export const snippetCardProps = { content: cardSnippet } satisfies CardProps;

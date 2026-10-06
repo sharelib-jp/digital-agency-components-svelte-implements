@@ -5,6 +5,10 @@
     export let id: string | undefined = undefined;
     /** 入力欄の高さを決めるサイズ。既定値: 'sm'。 */
     export let size: 'sm' | 'md' | 'lg' = 'sm';
+    /** 入力の種類。passwordでは入力文字を伏せて表示します。既定値: 'text'。 */
+    export let type: 'text' | 'password' = 'text';
+    /** 入力欄とラベル領域を親要素の幅いっぱいに表示します。既定値: false。 */
+    export let fullWidth: boolean = false;
     /** 入力欄を読み取り専用にし、ユーザーによる編集を禁止します。既定値: false。 */
     export let readonly: boolean = false;
     /** 内部inputを無効にします。既定値: false。 */
@@ -63,6 +67,11 @@
         color: var(--color-neutral-solid-gray-900);
         font: inherit;
         line-height: 1;
+    }
+
+    .dads-input-text-field[data-full-width='true'],
+    .dads-input-text__input[data-full-width='true'] {
+        width: 100%;
     }
 
     .dads-input-text__input[data-size='sm'] {
@@ -139,7 +148,7 @@
     }
 </style>
 
-<div class="dads-input-text-field">
+<div class="dads-input-text-field" data-full-width={fullWidth}>
     {#if label}
         <FormControlLabel
             For={inputId}
@@ -154,8 +163,9 @@
         <input
             id={inputId}
             class="dads-input-text__input"
-            type="text"
+            {type}
             data-size={size}
+            data-full-width={fullWidth}
             bind:value
             {readonly}
             {disabled}

@@ -59,7 +59,7 @@ async function findFirefox() {
   return null;
 }
 
-async function bundleHarness(harnessSource) {
+async function bundleHarness(harnessSource, expectedWarnings) {
   const result = await withTimeout(
     build({
       root: frontendDirectory,
@@ -106,8 +106,8 @@ async function bundleHarness(harnessSource) {
               dev: true,
             });
             assert.deepEqual(
-              compiled.warnings,
-              [],
+              compiled.warnings.map(({ code, message }) => ({ code, message })),
+              expectedWarnings[path.basename(filename)] ?? [],
               `${path.basename(filename)} compiler warnings`,
             );
             return { code: compiled.js.code, map: compiled.js.map };
@@ -418,7 +418,8 @@ async function stopFirefox(browser, exited) {
   }
 }
 
-export function browserTest(title, harnessSource, run) {
+// Legacy components can specify an exact warning baseline; new warnings still fail.
+export function browserTest(title, harnessSource, run, expectedWarnings = {}) {
   test(title, { timeout: 180000 }, async (t) => {
     const executable = await findFirefox();
     if (!executable) {
@@ -434,7 +435,7 @@ export function browserTest(title, harnessSource, run) {
     );
     let server, browser, exited, bidi, profile;
     try {
-      const assets = await bundleHarness(harnessSource);
+      const assets = await bundleHarness(harnessSource, expectedWarnings);
       server = createServer((request, response) => {
         const pathname = new URL(request.url, "http://localhost").pathname;
         const asset = assets.get(pathname);

@@ -12,6 +12,8 @@
     export let label: string = '';
     /** ラベルの文字サイズと周囲の間隔。入力欄の行数ではありません。既定値: 'md'。 */
     export let size: 'sm' | 'md' | 'lg' = 'md';
+    /** 入力欄とラベル領域を親要素の幅いっぱいに表示します。既定値: false。 */
+    export let fullWidth: boolean = false;
     /** textareaのrows属性（表示行数）。正の整数を指定し、未指定時はブラウザーに委ねます。既定値: undefined。 */
     export let rows: number | undefined = undefined;
     /** textareaのcols属性（表示幅の目安）。正の整数を指定し、未指定時はブラウザーに委ねます。既定値: undefined。 */
@@ -113,7 +115,7 @@
     });
 </script>
 
-<div class={`dads-form-control-label ${Class}`} data-size={size}>
+<div class={`dads-form-control-label ${Class}`} data-size={size} data-full-width={fullWidth}>
     {#if label}
         {#if readonly}
             <label class="dads-form-control-label__label" for={id}>
@@ -137,6 +139,7 @@
                 {id}
                 {name}
                 class="dads-textarea__textarea"
+                data-full-width={fullWidth}
                 {rows}
                 {cols}
                 bind:this={textarea}
@@ -269,6 +272,11 @@
         color: var(--color-neutral-solid-gray-900);
         font: inherit;
         resize: vertical;
+    }
+
+    .dads-form-control-label[data-full-width="true"],
+    .dads-textarea__textarea[data-full-width="true"] {
+        width: 100%;
     }
 
     .dads-textarea__textarea:read-only:not(:disabled) {

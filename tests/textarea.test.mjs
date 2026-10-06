@@ -67,6 +67,25 @@ for (const size of ["sm", "md", "lg"]) {
   });
 }
 
+for (const fullWidth of [undefined, false, true]) {
+  test(`Textarea: fullWidth=${fullWidth ?? "default"} sets the root and textarea modifier without forwarding the prop`, () => {
+    const html = renderComponent("Textarea", {
+      id: "width-textarea",
+      ...(fullWidth === undefined ? {} : { fullWidth }),
+    });
+    getTag(html, "div", {
+      class: "dads-form-control-label",
+      "data-full-width": String(fullWidth ?? false),
+    });
+    const textarea = getTag(html, "textarea", {
+      id: "width-textarea",
+      "data-full-width": String(fullWidth ?? false),
+    });
+    assertAbsentAttribute(textarea, "fullWidth");
+    assertAbsentAttribute(textarea, "fullwidth");
+  });
+}
+
 test("Textarea: readonly status replaces requirement annotation and preserves support association", () => {
   const html = renderComponent("Textarea", {
     id: "readonly",
